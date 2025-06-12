@@ -9,7 +9,7 @@ class Animal extends Model
 
     protected $table = 'animales';
 
-    protected $fillable = ['nombre', 'codigo', 'sexo', 'etapa',
+    protected $fillable = ['nombre', 'codigo', 'sexo', 'etapa', 'numero',
      'fechaNacimiento', 'peso', 'observaciones',   'estado'];
 
     public static function search($search)

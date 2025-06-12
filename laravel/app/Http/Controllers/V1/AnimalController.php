@@ -51,10 +51,11 @@ class AnimalController extends Controller
     public function store(Request $request)
     {
         //Validamos los datos
-        $data = $request->only('nombre', 'codigo', 'sexo', 'etapa',
+        $data = $request->only('nombre', 'codigo', 'sexo', 'etapa', 'numero',
      'fechaNacimiento', 'peso', 'observaciones');
         $validator = Validator::make($data, [
             'nombre' => 'required|max:200|string',
+            'numero' => 'required|unique:animales,numero',
             'sexo' => 'required|string',
             'etapa' => 'required|string',
             'peso' => 'required|string',
@@ -68,6 +69,7 @@ class AnimalController extends Controller
         //Creamos el producto en la BD
         $objeto = $this->model::create([
             'nombre'=>strtoupper($request->nombre),
+            'numero'=>($request->numero),
             'codigo'=>($request->codigo),
             'sexo'=>($request->sexo),
             'etapa'=>($request->etapa),
@@ -108,11 +110,12 @@ class AnimalController extends Controller
     public function update(Request $request, $id)
     {
         //Validamos los datos
-        $data = $request->only('nombre', 'codigo', 'sexo', 'etapa',
+        $data = $request->only('nombre', 'codigo', 'sexo', 'etapa', 'numero',
      'fechaNacimiento', 'peso', 'observaciones');
         $validator = Validator::make($data, [
             'nombre' => 'required|max:200|string',
             'sexo' => 'required|string',
+            'numero' => 'required|unique:animales,numero,'.$id,
             'etapa' => 'required|string',
             'peso' => 'required|string',
         ]);
@@ -129,6 +132,7 @@ class AnimalController extends Controller
         $objeto->update([
             'nombre'=>strtoupper($request->nombre),
             'codigo'=>$request->codigo,
+            'numero'=>$request->numero,
             'sexo'=>$request->sexo,
             'etapa'=>$request->etapa,
             'fechaNacimiento'=>$request->fechaNacimiento,

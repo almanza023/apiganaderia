@@ -108,6 +108,7 @@ class AnimalCompraController extends Controller
                 $animal = Animal::create([
                     'nombre' => strtoupper($request->animal["nombre"]),
                     'codigo' => $request->numero,
+                    'numero' => $request->animal["numero"],
                     'sexo' => ($request->animal["sexo"]),
                     'etapa' => ($request->animal["etapa"]),
                     'fechaNacimiento' => ($request->animal["fechaNacimiento"]),

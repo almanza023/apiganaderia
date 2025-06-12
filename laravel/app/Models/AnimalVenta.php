@@ -37,7 +37,7 @@ class AnimalVenta extends Model
     }
 
     public static function getCodigo(){
-        $obj=AnimalVenta::latest('id')->where('estado',1)->first();
+        $obj=AnimalVenta::latest('id')->first();
         if(!empty($obj)){
             return 'FV'.($obj->id+1);
         }
