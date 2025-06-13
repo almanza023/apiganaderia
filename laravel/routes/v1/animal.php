@@ -11,5 +11,6 @@ use Illuminate\Support\Facades\Route;
         Route::post('animales/cambiarEstado', [AnimalController::class, 'cambiarEstado']);
         Route::get('animales-activos', [AnimalController::class, 'activos']);
         Route::get('animales-compra', [AnimalController::class, 'getAnimalesCompra']);
+        Route::get('animales-venta', [AnimalController::class, 'getAnimalesventa']);
 
 ?>

@@ -5,12 +5,8 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Animal;
 use App\Models\AnimalCompra;
-use App\Models\CajaMenor;
-use App\Models\Compra;
+use App\Models\Consecutivo;
 use App\Models\DetalleCompra;
-use App\Models\MovimientoInventario;
-use App\Models\Producto;
-use App\Models\ProductoBodega;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -76,6 +72,13 @@ class AnimalCompraController extends Controller
                 'estado' => 0
             ]
         );
+
+        //Actualizar Consecutivo
+        $consecutivo = Consecutivo::where('nombre', 'FC')->first();
+        if ($consecutivo) {
+            $consecutivo->numero += 1;
+            $consecutivo->save();
+        }
 
         // Respuesta en caso de que todo vaya bien.
         return response()->json([
@@ -348,7 +351,7 @@ class AnimalCompraController extends Controller
     public function getCodigo()
     {
         // Listamos todos los registros activos
-        $objeto = $this->model::getCodigo();
+        $objeto = Consecutivo::getConsecutivo('FC');
         if ($objeto) {
             return response()->json([
                 'code' => 200,

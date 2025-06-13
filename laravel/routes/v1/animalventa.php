@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Route;
         Route::get('animalventas-getCodigo', [AnimalVentaController::class, 'getCodigo']);
         Route::post('animalventas-getByNumero', [AnimalVentaController::class, 'showByNumero']);
         Route::get('animalventas-insumos/{id}', [AnimalVentaController::class, 'getInsumosPorAnimal']);
+        Route::delete('animalventas-detalles/{id}', [AnimalVentaController::class, 'destroyDetalle']);
+        Route::post('animalventas-consolidado-general', [AnimalVentaController::class, 'reporteConsolidadoGeneral']);
+        Route::post('animalventas-individual', [AnimalVentaController::class, 'reporteAnimal']);
+
+
 
 
 

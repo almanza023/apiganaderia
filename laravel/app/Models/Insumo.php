@@ -35,7 +35,7 @@ class Insumo extends Model
     }
 
     public static function getAll(){
-        return self::with('producto')->orderByDesc('id')->get();
+        return self::with(['producto.tipoUnidad'])->orderByDesc('id')->get();
     }
 
     public static function getActive(){
@@ -70,6 +70,28 @@ public static function getHistorialAplicaciones($insumoId) {
         ->orderBy('aplicaciones_insumos.fecha', 'desc')
         ->get();
 }
+
+// Obtener el total gastado por un animal específico
+public static function getTotalGastadoPorAnimal($animalId) {
+    // Suma la cantidad aplicada y el equivalente en dinero (cantidad_aplicada * precio unitario del insumo)
+    return DB::table('aplicaciones_insumos')
+        ->join('insumos', 'aplicaciones_insumos.insumo_id', '=', 'insumos.id')
+        ->selectRaw('SUM(aplicaciones_insumos.cantidad_aplicada) as total_cantidad, (SUM(aplicaciones_insumos.cantidad_aplicada) * (insumos.total / insumos.total_contenido)) as total_dinero')
+        ->where('aplicaciones_insumos.animal_id', $animalId)
+        ->first();
+}
+
+public static function getTotalGastadoPorAnimalDetallado($animalId) {
+    // Suma la cantidad aplicada y el equivalente en dinero (cantidad_aplicada * precio unitario del insumo)
+    return DB::table('aplicaciones_insumos')
+        ->join('insumos', 'aplicaciones_insumos.insumo_id', '=', 'insumos.id')
+        ->join('productos', 'insumos.id_producto', '=', 'productos.id')
+        ->join('tipo_unidades', 'productos.id_tipo_unidad', '=', 'tipo_unidades.id')
+        ->selectRaw('productos.nombre as nombre_producto, tipo_unidades.nombre as nombre_tipo_unidad, aplicaciones_insumos.cantidad_aplicada as total_cantidad, (aplicaciones_insumos.cantidad_aplicada * (insumos.total / insumos.total_contenido)) as total_dinero')
+        ->where('aplicaciones_insumos.animal_id', $animalId)
+        ->get();
+}
+
 
 
 

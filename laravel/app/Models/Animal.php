@@ -63,6 +63,10 @@ class Animal extends Model
         ->get();
         }
 
+    public static function getAnimales($estado){
+        return self::where('estado', $estado)->orderBy('id', 'desc')->get();
+    }
+
 
 
 }

@@ -228,6 +228,23 @@ class AnimalController extends Controller
        }
     }
 
+    public function getAnimalesventa()
+    {
+        //Listamos todos los registros activos
+       $objeto=$this->model::getAnimales(2);
+       if($objeto){
+        return response()->json([
+            'code'=>200,
+            'data' => $objeto
+        ], Response::HTTP_OK);
+       }else{
+        return response()->json([
+            'code'=>200,
+            'data' => []
+        ], Response::HTTP_OK);
+       }
+    }
+
 
 
 
